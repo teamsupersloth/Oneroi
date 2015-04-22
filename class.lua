@@ -1,9 +1,9 @@
 -- class.lua
 -- Compatible with Lua 5.1 (not 5.0).
-function class(base, __init)
+function class(base, new)
    local c = {}    -- a new class instance
-   if not __init and type(base) == 'function' then
-      __init = base
+   if not new and type(base) == 'function' then
+      new = base
       base = nil
    elseif type(base) == 'table' then
     -- our new class is a shallow copy of the base class!
@@ -21,17 +21,17 @@ function class(base, __init)
    mt.__call = function(class_tbl, ...)
    local obj = {}
    setmetatable(obj,c)
-   if __init then
-      __init(obj,...)
+   if new then
+      new(obj,...)
    else 
-      -- make sure that any stuff from the base class is __initialized!
-      if base and base.__init then
-      base.__init(obj, ...)
+      -- make sure that any stuff from the base class is newialized!
+      if base and base.new then
+      base.new(obj, ...)
       end
    end
    return obj
    end
-   c.__init = __init
+   c.new = new
    c.is_a = function(self, klass)
       local m = getmetatable(self)
       while m do 

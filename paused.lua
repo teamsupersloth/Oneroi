@@ -13,7 +13,9 @@ function P.draw()
 end
 
 function P.keypressed(key)
-
+	if(key == "escape") then
+			return "game"
+		end
 end
 
 function P.start(from)

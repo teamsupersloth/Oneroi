@@ -20,7 +20,7 @@ function Map:isColliding(obj)
 		return false
 	end
 	for i,v in ipairs(self.objects) do 
-		if(v:isSolid() and v ~= obj and v:collidesWith(obj))then
+		if(v:isSolid() and v ~= obj and v:collidesWith(obj)) then
 			return true
 		end
 	end
@@ -36,7 +36,11 @@ function Map:update(dt)
 end
 
 function keyPressed(key)
-	
+	for i,v in ipairs(self.objects) do
+		if(v:isActive()) then
+			v:keyPressed(key)
+		end
+	end
 end
 
 function Map:addObject(object)

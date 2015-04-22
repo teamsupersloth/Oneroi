@@ -1,8 +1,8 @@
 require "class"
 require "object"
 Player = class(Object,
-	function(plr,map,x,y,w,h,speed,depth)
-		Object.__init(plr,map,false,true,depth)
+	function(plr,x,y,w,h,speed,map,depth)
+		Object.new(plr,map,false,true,depth)
 		plr.x = x or 0
 		plr.y = y or 0
 		plr.w = w or 20
