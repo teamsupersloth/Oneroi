@@ -8,25 +8,50 @@ Player = class(Object,
 		plr.w = w or 20
 		plr.h = h or 20
 		plr.speed = speed or 100
+		plr.grav = 0
 		return plr
 	end)
 
 function Player:draw()
 	love.graphics.setColor(0, 255, 255, 255)
 	love.graphics.rectangle("fill", self.x, self.y, self.w, self.h)
+	love.graphics.print(tostring(self.grav), 100,10)
 end
 
 function Player:update(dt)
 	local dx = 0
 	local dy = 0
+
+	--Horizontal movement
 	if(love.keyboard.isDown("a")) then
 		dx = dx - self.speed * dt
 	end
 	if(love.keyboard.isDown("d")) then
 		dx = dx + self.speed * dt
 	end
-	local i = 1
-	if(dx > 0) then i = -1 end
+	
+	--Gravity movement
+	if(self:checkFree(0,1)) then
+		dy = dy + self.grav
+		self.grav = self.grav + 10*dt
+	else 
+		self.grav = 0
+		if(love.keyboard.isDown("w")) then
+			self.grav = -10
+			dy = -10*dt
+		end
+	end
+
+	--Account for rounding errors
+	print("_____BEFORE ROUNDING_____")
+	print(tostring(dx) .. "," .. tostring(dy))
+	dx = round(dx)
+	dy = round(dy)
+	print("_____AFTER ROUNDING_____")
+	print(tostring(dx) .. "," .. tostring(dy))
+	--Resolve Collisions and Movement
+	local i = .2
+	if(dx > 0) then i = -.2 end
 	for x = dx,0,i do
 		if(self:checkFree(dx,0)) then
 			self.x = self.x + x
@@ -45,7 +70,16 @@ end
 
 function Player:checkFree(dx,dy)
 	return self.map:placeFree(self.x + dx,self.y + dy) and 
-		   self.map:placeFree(self.x + self.w + dx,self.y + dy) and
-		   self.map:placeFree(self.x + dx,self.y + self.h + dy) and
-		   self.map:placeFree(self.x + self.w + dx,self.y + self.h + dy)
+		   self.map:placeFree(self.x + (self.w-1) + dx,self.y + dy) and
+		   self.map:placeFree(self.x + dx,self.y + (self.h-1) + dy) and
+		   self.map:placeFree(self.x + (self.w-1) + dx,self.y + (self.h-1) + dy)
+end
+
+--rounds a number away from 0
+function round(num) 
+	if num < 0 then 
+		return math.floor(num)
+	else 
+		return math.ceil(num) 
+	end
 end

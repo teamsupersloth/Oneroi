@@ -8,7 +8,7 @@ SolidObject = class(Object,
 		end)
 
 function SolidObject:containsPoint(x,y)
-	return x >= self.x and x <= self.x + self.w and y >= self.y and y <= self.y + self.h
+	return x >= self.x and x < self.x + self.w and y >= self.y and y < self.y + self.h
 end
 
 function SolidObject:collidesWith(other)

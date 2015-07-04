@@ -6,9 +6,10 @@ Map = class(
 	end)
 
 function Map:placeFree(x,y)
-	for i,v in ipairs(self.objects) do
+	for _,v in ipairs(self.objects) do
 		if(v:isSolid() and v:containsPoint(x,y)) then
-			print("collision")
+			print("_____COLLISION DETECTED_____")
+			print(tostring(x) .. "," .. tostring(y))
 			return false
 		end
 	end
@@ -28,7 +29,7 @@ function Map:isColliding(obj)
 end
 
 function Map:update(dt)
-	for i,v in ipairs(self.objects) do
+	for _,v in ipairs(self.objects) do
 		if(v:isActive()) then
 			v:update(dt)
 		end
@@ -36,7 +37,7 @@ function Map:update(dt)
 end
 
 function keyPressed(key)
-	for i,v in ipairs(self.objects) do
+	for _,v in ipairs(self.objects) do
 		if(v:isActive()) then
 			v:keyPressed(key)
 		end
@@ -50,7 +51,7 @@ function Map:addObject(object)
 end
 
 function Map:draw()
-	for i,v in ipairs(self.objects) do
+	for _,v in ipairs(self.objects) do
 		v:draw()
 	end
 end
