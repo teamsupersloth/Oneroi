@@ -24,7 +24,7 @@ function class(base, new)
    if new then
       new(obj,...)
    else 
-      -- make sure that any stuff from the base class is newialized!
+      -- make sure that any stuff from the base class is initialized!
       if base and base.new then
       base.new(obj, ...)
       end
