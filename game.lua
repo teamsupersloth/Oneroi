@@ -6,11 +6,11 @@ local G = {}
 
 function G.init()
 	map = Map()
-	player = Player:new()
-	wall = SolidObject:new(100,0,100,100)
-	floor = SolidObject:new(0,100,200,100,1)
+	player = Player()
 	map:addObject(player)
+	wall = SolidObject(100,0,100,100)
 	map:addObject(wall)
+	floor = SolidObject(0,100,200,100,1)
 	map:addObject(floor)
 end
 

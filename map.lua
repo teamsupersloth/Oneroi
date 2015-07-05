@@ -8,8 +8,6 @@ Map = class(
 function Map:placeFree(x,y)
 	for _,v in ipairs(self.objects) do
 		if(v:isSolid() and v:containsPoint(x,y)) then
-			print("_____COLLISION DETECTED_____")
-			print(tostring(x) .. "," .. tostring(y))
 			return false
 		end
 	end
